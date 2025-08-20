@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import './App.css'
 
 function App () {
@@ -18,7 +18,7 @@ function App () {
   // Crear los estaods para manejar: usuarios, busqueda, la carga y el tema.
   const [usuarios, setUsuarios] = useState([])
   const [busqueda, setBusqueda] = useState('')
-  const [cargando, setCargando] = useState(false)
+  const [cargando, setCargando] = useState(true)
   const [tema, setTema] = useState('light')
 
   // Función que simula una lladada a la API para cargar usuarios.
@@ -39,6 +39,21 @@ function App () {
       setCargando(false)
     })
   }, [])
+
+  // useMemo: Lo usamos para filtrar los usuarios en función de la búsqueda.
+  const usuariosFiltrados = useMemo(() => {
+    return usuarios.filter((usuario) => {
+      return usuario.nombre.toLowerCase().includes(busqueda.toLowerCase())
+    })
+  }, [usuarios, busqueda])
+
+  const estilo = {
+    backgroundColor: tema === 'light' ? '#fff' : '#333',
+    color: tema === 'light' ? '#333' : '#fff',
+    padding: '20px',
+    borderRadius: '5px',
+    transition: 'all 0.3s ease'
+  }
 
   return <h1>Hello World</h1>
 }
