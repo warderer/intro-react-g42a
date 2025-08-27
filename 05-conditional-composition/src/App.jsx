@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import Widget from './components/Widget/Widget'
 
 function App () {
   // Estado para saber si el usuario ha iniciado sesión o no
@@ -17,8 +18,19 @@ function App () {
       {/* --- RENDERIZADO CONDICIONAL CON OP. TERNARIO --- */}
       {
         isLoggedIn
-          ? <button onClick={handleLogout}>Cerrar Sesión</button>
-          : <button onClick={handleLogin}>Iniciar Sesión</button>
+          ? (
+            <Widget title='Perfil de Usuario'>
+              <p><strong>Usuario:</strong> César Guerra</p>
+              <p><strong>Rol:</strong> Administrador</p>
+              <button onClick={handleLogout}>Cerrar Sesión</button>
+            </Widget>
+            )
+          : (
+            <Widget title='Iniciar Sesión'>
+              <p>Por favor, inicia sesión para acceder a tu cuenta.</p>
+              <button onClick={handleLogin}>Iniciar Sesión</button>
+            </Widget>
+            )
       }
 
     </div>
